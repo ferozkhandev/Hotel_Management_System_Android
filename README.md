@@ -1,6 +1,6 @@
-# Patta Android App
+# Hotel Management System Android App
 
-Patta Android App is an Android App for Patta App Project assigned by DSC VU. Basically Patta is a location sharing app. It will generate a unique 10 digit code for every building which will further be used to share location via sharing that 10 digit code in the form of a QR Code. So in simple, a user can generate QR of his location, other can scan that QR and get his exact pin location.
+Hotel Management System Android App is actually a hotel room reservation system.
 
 ## Tools
 
