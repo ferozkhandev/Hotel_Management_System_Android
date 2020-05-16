@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewRoomActivity"
-    android:orientation="vertical">
+    tools:context=".ui.view_rooms.ViewRoomsActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -349,7 +349,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-           
+
         </LinearLayout>
     </ScrollView>
 
