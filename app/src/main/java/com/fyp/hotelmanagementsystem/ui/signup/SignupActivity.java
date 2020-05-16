@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
@@ -30,6 +31,15 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
 
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
+        populateUserTypes();
+    }
+
+    private void populateUserTypes(){
+        String[] userTypes = {"User", "Hotel Manager"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, userTypes);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.userType.setAdapter(adapter);
     }
 
     @Override
@@ -51,9 +61,9 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
     public void onSingupValidationError(String message, String field, boolean error) {
         if (field.equals(Tags.NAME)){
             if (error){
-
+                binding.name.setError(message);
             } else {
-
+                binding.name.setError(null);
             }
         }
         if (field.equals(Tags.EMAIL)){
@@ -71,7 +81,11 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
             }
         }
         if (field.equals(Tags.USERTYPE)){
-
+            if (error){
+                binding.userType.setError(message);
+            } else {
+                binding.userType.setError(null);
+            }
         }
         binding.progressBar.setVisibility(View.INVISIBLE);
     }

@@ -7,10 +7,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.fyp.hotelmanagementsystem.models.Hotel;
+import com.fyp.hotelmanagementsystem.models.Rating;
 import com.fyp.hotelmanagementsystem.models.Rooms;
 import com.fyp.hotelmanagementsystem.models.User;
 
-@Database(entities = {User.class, Hotel.class, Rooms.class, User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Hotel.class, Rooms.class, Rating.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase  extends RoomDatabase {
 
     private static AppDatabase instance;

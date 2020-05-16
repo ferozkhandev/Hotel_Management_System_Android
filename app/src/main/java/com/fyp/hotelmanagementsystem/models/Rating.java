@@ -72,4 +72,12 @@ public class Rating {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public int getRatingToUserType() {
+        return ratingToUserType;
+    }
+
+    public void setRatingToUserType(int ratingToUserType) {
+        this.ratingToUserType = ratingToUserType;
+    }
 }
