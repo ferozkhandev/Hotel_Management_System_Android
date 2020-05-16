@@ -4,4 +4,6 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="please_select_a_user_type">Please Select a User Type</string>
 </resources>
