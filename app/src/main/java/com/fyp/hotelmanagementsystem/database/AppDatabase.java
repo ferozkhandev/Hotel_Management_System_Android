@@ -14,6 +14,10 @@ import com.fyp.hotelmanagementsystem.models.User;
 public abstract class AppDatabase  extends RoomDatabase {
 
     private static AppDatabase instance;
+    public abstract UserDAO userDAO();
+    public abstract HotelDAO hotelDAO();
+    public abstract RoomsDAO roomsDAO();
+    public abstract RatingDAO ratingDAO();
 
     public static synchronized AppDatabase getInstance(Context context){
         if (instance == null){

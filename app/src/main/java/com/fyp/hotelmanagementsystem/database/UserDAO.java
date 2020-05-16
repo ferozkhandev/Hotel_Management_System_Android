@@ -13,7 +13,7 @@ import com.fyp.hotelmanagementsystem.models.User;
 public interface UserDAO {
 
     @Insert
-    void insert(User user);
+    long insert(User user);
 
     @Update
     void update(User user);
@@ -23,4 +23,7 @@ public interface UserDAO {
 
     @Query("SELECT * FROM user WHERE id=:id")
     LiveData<User> getUser(int id);
+
+    @Query("SELECT * FROM user WHERE email=:email AND password=:password")
+    User login(String email, String password);
 }
