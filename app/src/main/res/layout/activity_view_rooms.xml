@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.view_rooms.ViewRoomsActivity">
 
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -351,6 +351,6 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
 
 </LinearLayout>
