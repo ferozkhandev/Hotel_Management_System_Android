@@ -3,15 +3,21 @@ package com.fyp.hotelmanagementsystem.ui.signup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.databinding.ActivitySignupBinding;
+import com.fyp.hotelmanagementsystem.models.Hotel;
+import com.fyp.hotelmanagementsystem.ui.login.LoginActivity;
+import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.fyp.hotelmanagementsystem.utils.Tags;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,6 +28,7 @@ import java.util.concurrent.Executors;
 public class SignupActivity extends AppCompatActivity implements SignupListener, LifecycleOwner {
 
     private ActivitySignupBinding binding;
+    private SignupViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +37,7 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
 
         SignupViewModelFactory factory = new SignupViewModelFactory(AppDatabase.getInstance(getApplicationContext()),
                 this, Executors.newSingleThreadExecutor());
-        SignupViewModel viewModel = new ViewModelProvider(this, factory).get(SignupViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(SignupViewModel.class);
 
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
@@ -43,11 +50,26 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
     }
 
     @Override
-    public void onSignupSuccess() {
+    public void onSignupSuccess(int userType) {
         runOnUiThread(() -> {
             binding.progressBar.setVisibility(View.INVISIBLE);
             binding.signupBtn.setEnabled(true);
             Snackbar.make(findViewById(android.R.id.content), "Success", Snackbar.LENGTH_LONG).show();
+            if (userType == 1){
+                //Hotel Manager
+                viewModel.getHotel(SharedPreferencesUtility.getUser().getId()).observe(this, hotels -> {
+                    if (hotels!=null && !hotels.isEmpty()){
+                        //Move to his Dashboard
+
+                    } else {
+                        //Move to Add hotel page
+
+                    }
+                });
+            } else {
+                //User
+
+            }
         });
     }
 
@@ -84,5 +106,12 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
             }
         }
         binding.progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+        this.finish();
     }
 }

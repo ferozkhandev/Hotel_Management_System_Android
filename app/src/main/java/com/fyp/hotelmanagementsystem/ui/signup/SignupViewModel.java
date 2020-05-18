@@ -1,24 +1,22 @@
 package com.fyp.hotelmanagementsystem.ui.signup;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
-import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
-import androidx.databinding.InverseBindingMethod;
-import androidx.databinding.InverseBindingMethods;
 import androidx.databinding.adapters.AdapterViewBindingAdapter;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
+import com.fyp.hotelmanagementsystem.models.Hotel;
 import com.fyp.hotelmanagementsystem.models.User;
+import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.fyp.hotelmanagementsystem.utils.Tags;
-import com.tiper.MaterialSpinner;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 
 public class SignupViewModel extends ViewModel {
@@ -40,9 +38,11 @@ public class SignupViewModel extends ViewModel {
         if (isValid()){
             executor.execute(() -> {
                 try {
-                    long inserted = database.userDAO().insert(new User(name, email, password, userType));
+                    User user = new User(name, email, password, userType);
+                    long inserted = database.userDAO().insert(user);
                     if (inserted>0){
-                        listener.onSignupSuccess();
+                        SharedPreferencesUtility.setUser(user);
+                        listener.onSignupSuccess(user.getUserType());
                     } else {
                         listener.onSignupFailure("Unable to Signup");
                     }
@@ -51,6 +51,10 @@ public class SignupViewModel extends ViewModel {
                 }
             });
         }
+    }
+
+    LiveData<List<Hotel>> getHotel(int userId){
+        return database.hotelDAO().getHotel(userId);
     }
 
     @BindingAdapter("android:selectedItemPosition")
