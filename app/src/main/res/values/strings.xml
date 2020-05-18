@@ -6,4 +6,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="name">Name</string>
     <string name="please_select_a_user_type">Please Select a User Type</string>
+    <string-array name="usertypes">
+        <item>User</item>
+        <item>Hotel Manager</item>
+    </string-array>
 </resources>

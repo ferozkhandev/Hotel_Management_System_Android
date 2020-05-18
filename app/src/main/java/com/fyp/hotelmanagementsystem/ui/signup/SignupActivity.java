@@ -13,7 +13,10 @@ import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.databinding.ActivitySignupBinding;
 import com.fyp.hotelmanagementsystem.utils.Tags;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 
 public class SignupActivity extends AppCompatActivity implements SignupListener, LifecycleOwner {
@@ -31,30 +34,30 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
 
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
-        populateUserTypes();
-    }
-
-    private void populateUserTypes(){
-        String[] userTypes = {"User", "Hotel Manager"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, userTypes);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.userType.setAdapter(adapter);
     }
 
     @Override
     public void onSignupStart() {
         binding.progressBar.setVisibility(View.VISIBLE);
+        binding.signupBtn.setEnabled(false);
     }
 
     @Override
     public void onSignupSuccess() {
-        binding.progressBar.setVisibility(View.INVISIBLE);
+        runOnUiThread(() -> {
+            binding.progressBar.setVisibility(View.INVISIBLE);
+            binding.signupBtn.setEnabled(true);
+            Snackbar.make(findViewById(android.R.id.content), "Success", Snackbar.LENGTH_LONG).show();
+        });
     }
 
     @Override
     public void onSignupFailure(String error) {
-        binding.progressBar.setVisibility(View.INVISIBLE);
+        runOnUiThread(() -> {
+            binding.progressBar.setVisibility(View.INVISIBLE);
+            binding.signupBtn.setEnabled(true);
+            Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG).show();
+        });
     }
 
     @Override
@@ -78,13 +81,6 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
                 binding.password.setError(message);
             } else {
                 binding.password.setError(null);
-            }
-        }
-        if (field.equals(Tags.USERTYPE)){
-            if (error){
-                binding.userType.setError(message);
-            } else {
-                binding.userType.setError(null);
             }
         }
         binding.progressBar.setVisibility(View.INVISIBLE);

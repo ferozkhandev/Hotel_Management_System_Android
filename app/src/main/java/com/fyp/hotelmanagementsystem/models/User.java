@@ -2,9 +2,10 @@ package com.fyp.hotelmanagementsystem.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "user")
+@Entity(tableName = "user", indices = {@Index(value = {"email"}, unique = true)})
 public class User {
 
     @PrimaryKey(autoGenerate = true)
