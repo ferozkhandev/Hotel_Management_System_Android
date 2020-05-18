@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.fyp.hotelmanagementsystem.R;
+import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.models.Hotel;
 import com.fyp.hotelmanagementsystem.models.User;
 import com.fyp.hotelmanagementsystem.ui.login.LoginActivity;
@@ -23,7 +24,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        SplashViewModel viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+        SplashViewModelFactory factory = new SplashViewModelFactory(AppDatabase.getInstance(getApplicationContext()));
+        SplashViewModel viewModel = new ViewModelProvider(this, factory).get(SplashViewModel.class);
 
         new Handler().postDelayed(() -> {
             User user = SharedPreferencesUtility.getUser();
