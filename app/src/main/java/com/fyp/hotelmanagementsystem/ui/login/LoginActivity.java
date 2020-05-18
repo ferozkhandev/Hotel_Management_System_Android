@@ -12,14 +12,17 @@ import android.view.View;
 import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.databinding.ActivityLoginBinding;
+import com.fyp.hotelmanagementsystem.ui.add_hotel.AddHotelActivity;
 import com.fyp.hotelmanagementsystem.ui.signup.SignupActivity;
+import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.concurrent.Executors;
 
 public class LoginActivity extends AppCompatActivity implements LoginListener, LifecycleOwner {
 
-    ActivityLoginBinding binding;
+    private ActivityLoginBinding binding;
+    private LoginViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener, L
 
         LoginViewModelFactory factory = new LoginViewModelFactory(AppDatabase.getInstance(getApplicationContext()),
                 this, Executors.newSingleThreadExecutor());
-        LoginViewModel viewModel = new ViewModelProvider(this, factory).get(LoginViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(LoginViewModel.class);
 
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
@@ -53,10 +56,19 @@ public class LoginActivity extends AppCompatActivity implements LoginListener, L
             Snackbar.make(findViewById(android.R.id.content), "Success", Snackbar.LENGTH_LONG).show();
             if (userType == 1){
                 //Hotel Manager
+                viewModel.getHotel(SharedPreferencesUtility.getUser().getId()).observe(this, hotels -> {
+                    if (hotels != null && hotels.isEmpty()){
+                        //Move to his Dashboard
 
+                    } else {
+                        //Move to Add hotel
+                        startActivity(new Intent(LoginActivity.this, AddHotelActivity.class));
+                    }
+                    LoginActivity.this.finish();
+                });
             } else {
                 //User
-
+                LoginActivity.this.finish();
             }
         });
     }

@@ -16,6 +16,7 @@ import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.databinding.ActivitySignupBinding;
 import com.fyp.hotelmanagementsystem.models.Hotel;
+import com.fyp.hotelmanagementsystem.ui.add_hotel.AddHotelActivity;
 import com.fyp.hotelmanagementsystem.ui.login.LoginActivity;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.fyp.hotelmanagementsystem.utils.Tags;
@@ -63,8 +64,9 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
 
                     } else {
                         //Move to Add hotel page
-
+                        startActivity(new Intent(SignupActivity.this, AddHotelActivity.class));
                     }
+                    SignupActivity.this.finish();
                 });
             } else {
                 //User

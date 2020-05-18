@@ -2,12 +2,15 @@ package com.fyp.hotelmanagementsystem.ui.login;
 
 import android.view.View;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
+import com.fyp.hotelmanagementsystem.models.Hotel;
 import com.fyp.hotelmanagementsystem.models.User;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 
 public class LoginViewModel extends ViewModel {
@@ -35,5 +38,9 @@ public class LoginViewModel extends ViewModel {
                 listener.onLoginFailure("Please check your email/password");
             }
         });
+    }
+
+    LiveData<List<Hotel>> getHotel(int userId){
+        return database.hotelDAO().getHotel(userId);
     }
 }

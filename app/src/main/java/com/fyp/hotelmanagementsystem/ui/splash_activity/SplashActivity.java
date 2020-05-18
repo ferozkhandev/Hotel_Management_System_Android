@@ -12,6 +12,7 @@ import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.models.Hotel;
 import com.fyp.hotelmanagementsystem.models.User;
+import com.fyp.hotelmanagementsystem.ui.add_hotel.AddHotelActivity;
 import com.fyp.hotelmanagementsystem.ui.login.LoginActivity;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 
@@ -38,12 +39,13 @@ public class SplashActivity extends AppCompatActivity {
 
                         } else {
                             //Move to Add hotel
-
+                            startActivity(new Intent(SplashActivity.this, AddHotelActivity.class));
+                            SplashActivity.this.finish();
                         }
                     });
                 } else {
                     //User
-
+                    SplashActivity.this.finish();
                 }
             } else {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
