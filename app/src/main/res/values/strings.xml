@@ -13,4 +13,5 @@
         <item>Hotel Manager</item>
     </string-array>
     <string name="title_activity_add_hotel">Map</string>
+    <string name="hotel_name">Hotel Name</string>
 </resources>

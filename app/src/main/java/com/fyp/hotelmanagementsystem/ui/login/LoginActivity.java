@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener, L
             if (userType == 1){
                 //Hotel Manager
                 viewModel.getHotel(SharedPreferencesUtility.getUser().getId()).observe(this, hotels -> {
-                    if (hotels != null && hotels.isEmpty()){
+                    if (hotels != null && !hotels.isEmpty()){
                         //Move to his Dashboard
 
                     } else {

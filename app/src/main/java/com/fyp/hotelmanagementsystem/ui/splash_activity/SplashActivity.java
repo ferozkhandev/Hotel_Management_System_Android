@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (user.getUserType() == 1){
                     //Hotel Manager
                     viewModel.getHotel(user.getId()).observe(this, hotels -> {
-                        if (hotels != null && hotels.isEmpty()){
+                        if (hotels != null && !hotels.isEmpty()){
                             //Move to his Dashboard
 
                         } else {
