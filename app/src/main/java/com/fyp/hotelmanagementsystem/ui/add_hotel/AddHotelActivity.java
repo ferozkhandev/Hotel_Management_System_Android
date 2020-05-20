@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
@@ -21,20 +20,21 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
 import com.fyp.hotelmanagementsystem.R;
+import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.databinding.ActivityAddHotelBinding;
+import com.fyp.hotelmanagementsystem.ui.hotel_manager_dashboard.HotelManagerDashboardActivity;
 import com.fyp.hotelmanagementsystem.utils.DisplayMessage;
 import com.fyp.hotelmanagementsystem.utils.PermissionsCheck;
+import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,6 +45,8 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.concurrent.Executors;
 
 public class AddHotelActivity extends FragmentActivity implements OnMapReadyCallback, AddHotelConfirmationDialog.AddHotelConfirmationDialogListener {
 
@@ -60,7 +62,9 @@ public class AddHotelActivity extends FragmentActivity implements OnMapReadyCall
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_hotel);
         AddHotelViewModelFactory factory = new AddHotelViewModelFactory(
                 LocationServices.getFusedLocationProviderClient(getApplicationContext()),
-                new MutableLiveData<>()
+                new MutableLiveData<>(),
+                AppDatabase.getInstance(getApplicationContext()),
+                Executors.newSingleThreadExecutor()
         );
         viewModel = new ViewModelProvider(this, factory).get(AddHotelViewModel.class);
 
@@ -213,6 +217,9 @@ public class AddHotelActivity extends FragmentActivity implements OnMapReadyCall
         binding.simpleMapButtons.setVisibility(View.VISIBLE);
         binding.addLocationMapButtons.setVisibility(View.INVISIBLE);
         DisplayMessage.longShowMessage(this, hotelName);
+        viewModel.addHotel(hotelName, addedLocation.getLatitude(), addedLocation.getLongitude(), SharedPreferencesUtility.getUser().getId());
+        startActivity(new Intent(AddHotelActivity.this, HotelManagerDashboardActivity.class));
+        this.finish();
     }
 
     @Override

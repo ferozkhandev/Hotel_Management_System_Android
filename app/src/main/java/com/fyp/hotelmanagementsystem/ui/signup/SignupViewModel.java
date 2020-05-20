@@ -41,6 +41,7 @@ public class SignupViewModel extends ViewModel {
                     User user = new User(name, email, password, userType);
                     long inserted = database.userDAO().insert(user);
                     if (inserted>0){
+                        user.setId((int)inserted);
                         SharedPreferencesUtility.setUser(user);
                         listener.onSignupSuccess(user.getUserType());
                     } else {

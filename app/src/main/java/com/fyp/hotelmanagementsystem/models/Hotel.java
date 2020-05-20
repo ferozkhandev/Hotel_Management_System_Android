@@ -15,15 +15,15 @@ public class Hotel {
     private String hotelName;
 
     @ColumnInfo(name = "latitude")
-    private float latitude;
+    private double latitude;
 
     @ColumnInfo(name = "longitude")
-    private float longitude;
+    private double longitude;
 
     @ColumnInfo(name = "user_id")
     private int userID;
 
-    public Hotel(String hotelName, float latitude, float longitude, int userID) {
+    public Hotel(String hotelName, double latitude, double longitude, int userID) {
         this.hotelName = hotelName;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -46,19 +46,19 @@ public class Hotel {
         this.hotelName = hotelName;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

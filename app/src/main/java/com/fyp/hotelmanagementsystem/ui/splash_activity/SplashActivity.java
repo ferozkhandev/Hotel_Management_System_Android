@@ -13,6 +13,7 @@ import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.models.Hotel;
 import com.fyp.hotelmanagementsystem.models.User;
 import com.fyp.hotelmanagementsystem.ui.add_hotel.AddHotelActivity;
+import com.fyp.hotelmanagementsystem.ui.hotel_manager_dashboard.HotelManagerDashboardActivity;
 import com.fyp.hotelmanagementsystem.ui.login.LoginActivity;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 
@@ -36,7 +37,8 @@ public class SplashActivity extends AppCompatActivity {
                     viewModel.getHotel(user.getId()).observe(this, hotels -> {
                         if (hotels != null && !hotels.isEmpty()){
                             //Move to his Dashboard
-
+                            startActivity(new Intent(SplashActivity.this, HotelManagerDashboardActivity.class));
+                            SplashActivity.this.finish();
                         } else {
                             //Move to Add hotel
                             startActivity(new Intent(SplashActivity.this, AddHotelActivity.class));

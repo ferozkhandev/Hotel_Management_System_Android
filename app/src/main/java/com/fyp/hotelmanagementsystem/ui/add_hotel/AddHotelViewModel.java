@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.fyp.hotelmanagementsystem.database.AppDatabase;
+import com.fyp.hotelmanagementsystem.models.Hotel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -19,10 +21,14 @@ public class AddHotelViewModel extends ViewModel {
 
     private FusedLocationProviderClient fusedLocationClient;
     private MutableLiveData<Location> locationMutableLiveData;
+    private AppDatabase database;
+    private Executor executor;
 
-    AddHotelViewModel(FusedLocationProviderClient fusedLocationClient, MutableLiveData<Location> locationMutableLiveData) {
+    AddHotelViewModel(FusedLocationProviderClient fusedLocationClient, MutableLiveData<Location> locationMutableLiveData, AppDatabase database, Executor executor) {
         this.fusedLocationClient = fusedLocationClient;
         this.locationMutableLiveData = locationMutableLiveData;
+        this.database = database;
+        this.executor = executor;
     }
 
     LiveData<Location> getLocation(){
@@ -55,7 +61,7 @@ public class AddHotelViewModel extends ViewModel {
         return locationMutableLiveData;
     }
 
-    public void addHotel(){
-
+    void addHotel(String hotelName, double latitude, double longitude, int userId){
+        executor.execute(() -> database.hotelDAO().insert(new Hotel(hotelName, latitude, longitude, userId)));
     }
 }

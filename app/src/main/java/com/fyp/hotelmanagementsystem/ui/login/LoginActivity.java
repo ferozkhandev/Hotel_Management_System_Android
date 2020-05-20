@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.databinding.ActivityLoginBinding;
 import com.fyp.hotelmanagementsystem.ui.add_hotel.AddHotelActivity;
+import com.fyp.hotelmanagementsystem.ui.hotel_manager_dashboard.HotelManagerDashboardActivity;
 import com.fyp.hotelmanagementsystem.ui.signup.SignupActivity;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.google.android.material.snackbar.Snackbar;
@@ -59,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener, L
                 viewModel.getHotel(SharedPreferencesUtility.getUser().getId()).observe(this, hotels -> {
                     if (hotels != null && !hotels.isEmpty()){
                         //Move to his Dashboard
-
+                        startActivity(new Intent(LoginActivity.this, HotelManagerDashboardActivity.class));
                     } else {
                         //Move to Add hotel
                         startActivity(new Intent(LoginActivity.this, AddHotelActivity.class));
