@@ -12,6 +12,18 @@
         <item>User</item>
         <item>Hotel Manager</item>
     </string-array>
+    <string-array name="availability">
+        <item>Available</item>
+        <item>Not Available</item>
+    </string-array>
+    <string-array name="room_status">
+        <item>Available</item>
+        <item>Not Available</item>
+        <item>Checked In</item>
+        <item>Checked Out</item>
+    </string-array>
     <string name="title_activity_add_hotel">Map</string>
     <string name="hotel_name">Hotel Name</string>
+    <string name="add_room">Add Room</string>
+    <string name="room_number">Room Number</string>
 </resources>

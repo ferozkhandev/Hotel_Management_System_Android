@@ -74,7 +74,7 @@ public class AddHotelActivity extends FragmentActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
 
         binding.myLocation.setOnClickListener(v -> {
-            if (PermissionsCheck.checkPermission(this, this)){
+            if (PermissionsCheck.checkLocationPermission(this, this)){
                 verifyLocationSettings();
             }
         });
@@ -120,7 +120,7 @@ public class AddHotelActivity extends FragmentActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if (PermissionsCheck.checkPermission(this, this)){
+        if (PermissionsCheck.checkLocationPermission(this, this)){
             verifyLocationSettings();
         }
     }

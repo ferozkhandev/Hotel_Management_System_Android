@@ -2,6 +2,7 @@ package com.fyp.hotelmanagementsystem.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "room")
@@ -34,6 +35,10 @@ public class Rooms {
 
     @ColumnInfo(name = "hotel_id")
     private int hotelId;
+
+    @Ignore
+    public Rooms() {
+    }
 
     public Rooms(int roomNumber, int numberOfBeds, boolean internetAvailability, int rent, String picture, String status, boolean isAvailable, int hotelId) {
         this.roomNumber = roomNumber;
