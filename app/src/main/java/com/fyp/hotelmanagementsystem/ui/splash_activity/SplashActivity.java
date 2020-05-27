@@ -15,6 +15,7 @@ import com.fyp.hotelmanagementsystem.models.User;
 import com.fyp.hotelmanagementsystem.ui.add_hotel.AddHotelActivity;
 import com.fyp.hotelmanagementsystem.ui.hotel_manager_dashboard.HotelManagerDashboardActivity;
 import com.fyp.hotelmanagementsystem.ui.login.LoginActivity;
+import com.fyp.hotelmanagementsystem.ui.user_dashboard.UserDashboardActivity;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class SplashActivity extends AppCompatActivity {
                     });
                 } else {
                     //User
+                    startActivity(new Intent(SplashActivity.this, UserDashboardActivity.class));
                     SplashActivity.this.finish();
                 }
             } else {

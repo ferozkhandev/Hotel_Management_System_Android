@@ -79,6 +79,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_btn" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.7dp"
+            android:background="#333355"
+            app:layout_constraintEnd_toEndOf="@+id/create_account"
+            app:layout_constraintStart_toStartOf="@+id/create_account"
+            app:layout_constraintBottom_toBottomOf="@id/create_account"/>
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"

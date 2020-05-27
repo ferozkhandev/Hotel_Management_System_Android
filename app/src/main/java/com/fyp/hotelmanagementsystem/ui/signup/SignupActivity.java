@@ -17,7 +17,9 @@ import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.databinding.ActivitySignupBinding;
 import com.fyp.hotelmanagementsystem.models.Hotel;
 import com.fyp.hotelmanagementsystem.ui.add_hotel.AddHotelActivity;
+import com.fyp.hotelmanagementsystem.ui.hotel_manager_dashboard.HotelManagerDashboardActivity;
 import com.fyp.hotelmanagementsystem.ui.login.LoginActivity;
+import com.fyp.hotelmanagementsystem.ui.user_dashboard.UserDashboardActivity;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.fyp.hotelmanagementsystem.utils.Tags;
 import com.google.android.material.snackbar.Snackbar;
@@ -61,7 +63,7 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
                 viewModel.getHotel(SharedPreferencesUtility.getUser().getId()).observe(this, hotels -> {
                     if (hotels!=null && !hotels.isEmpty()){
                         //Move to his Dashboard
-
+                        startActivity(new Intent(SignupActivity.this, HotelManagerDashboardActivity.class));
                     } else {
                         //Move to Add hotel page
                         startActivity(new Intent(SignupActivity.this, AddHotelActivity.class));
@@ -70,7 +72,8 @@ public class SignupActivity extends AppCompatActivity implements SignupListener,
                 });
             } else {
                 //User
-
+                startActivity(new Intent(SignupActivity.this, UserDashboardActivity.class));
+                SignupActivity.this.finish();
             }
         });
     }

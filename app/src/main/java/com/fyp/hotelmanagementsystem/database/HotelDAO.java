@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.fyp.hotelmanagementsystem.models.AvailableRooms;
 import com.fyp.hotelmanagementsystem.models.Hotel;
 import com.fyp.hotelmanagementsystem.models.HotelWithRooms;
 
@@ -31,6 +32,10 @@ public interface HotelDAO {
     @Transaction
     @Query("SELECT * FROM hotel WHERE user_id=:userID")
     LiveData<HotelWithRooms> getHotelWithRooms(int userID);
+
+//    @Transaction
+    @Query("SELECT hotel.hotel_name, hotel.latitude, hotel.longitude, room.* FROM room LEFT JOIN hotel ON room.hotel_id = hotel.id")
+    LiveData<List<AvailableRooms>> getAllHotelWithRooms();
 
     @Query("SELECT id FROM hotel WHERE user_id=:userID")
     LiveData<Integer> getHotelId(int userID);

@@ -16,6 +16,7 @@ import com.fyp.hotelmanagementsystem.databinding.ActivityLoginBinding;
 import com.fyp.hotelmanagementsystem.ui.add_hotel.AddHotelActivity;
 import com.fyp.hotelmanagementsystem.ui.hotel_manager_dashboard.HotelManagerDashboardActivity;
 import com.fyp.hotelmanagementsystem.ui.signup.SignupActivity;
+import com.fyp.hotelmanagementsystem.ui.user_dashboard.UserDashboardActivity;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -70,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener, L
                 });
             } else {
                 //User
+                startActivity(new Intent(LoginActivity.this, UserDashboardActivity.class));
                 LoginActivity.this.finish();
             }
         });
