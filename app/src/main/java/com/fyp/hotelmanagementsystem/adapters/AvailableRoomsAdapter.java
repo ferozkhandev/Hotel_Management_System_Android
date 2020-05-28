@@ -1,5 +1,8 @@
 package com.fyp.hotelmanagementsystem.adapters;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -16,6 +19,8 @@ import com.fyp.hotelmanagementsystem.models.Rooms;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 public class AvailableRoomsAdapter extends RecyclerView.Adapter<AvailableRoomsAdapter.ViewHolder>  {
@@ -42,15 +47,23 @@ public class AvailableRoomsAdapter extends RecyclerView.Adapter<AvailableRoomsAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AvailableRooms room = rooms.get(position);
         Uri uri = Uri.parse(room.rooms.getPicture());
-//        holder.roomImage.setImageURI(uri);
         if (uri!=null && uri.getPath()!=null){
+            holder.itemView.getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            holder.roomImage.setImageURI(uri);
+            try {
+                InputStream imageStream = holder.itemView.getContext().getContentResolver().openInputStream(uri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                holder.roomImage.setImageBitmap(selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             /*Glide.with(holder.itemView.getContext())
                     .load(new File(uri.getPath()))
                     .into(holder.roomImage);*/
 
-            Picasso.get()
+            /*Picasso.get()
                     .load(uri)
-                    .into(holder.roomImage);
+                    .into(holder.roomImage);*/
         }
         holder.hotelName.setText(String.valueOf(room.hotelName));
         holder.roomNumber.setText(String.valueOf(room.rooms.getRoomNumber()));

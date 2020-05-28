@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +109,7 @@ public class AddRoomDialogFragment extends AppCompatDialogFragment {
     }
 
     private void pickImage() {
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent getIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         getIntent.setType("image/*");
 
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -146,7 +147,12 @@ public class AddRoomDialogFragment extends AppCompatDialogFragment {
     {
         if (requestCode == PICK_IMAGE) {
             Uri imageUri = data.getData();
-            viewModel.setImageUri(imageUri);
+            Intent intent = new Intent();
+            intent.setData(imageUri);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            if (imageUri!=null){
+                viewModel.setImageUri(intent.getData());
+            }
         }
     }
 
