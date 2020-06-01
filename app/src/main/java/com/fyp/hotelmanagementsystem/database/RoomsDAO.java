@@ -23,6 +23,9 @@ public interface RoomsDAO {
     @Delete
     void delete(Rooms rooms);
 
+    @Query("SELECT * FROM room WHERE id=:roomId")
+    LiveData<Rooms> getRoom(int roomId);
+
     @Query("SELECT * FROM room WHERE hotel_id=:hotelID")
     LiveData<List<Rooms>> getRooms(int hotelID);
 

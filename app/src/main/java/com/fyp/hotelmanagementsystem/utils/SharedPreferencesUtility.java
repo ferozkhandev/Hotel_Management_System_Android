@@ -35,4 +35,15 @@ public class SharedPreferencesUtility extends Application {
         String json = prefs.getString(BuildConfig.sp_user, null);
         return gson.fromJson(json, User.class);
     }
+
+    public static void setReservedRoom(int roomId){
+        SharedPreferences.Editor editor = application.getSharedPreferences(BuildConfig.sp_name, MODE_PRIVATE).edit();
+        editor.putInt(BuildConfig.sp_reserved_room, roomId);
+        editor.apply();
+    }
+
+    public static int getReservedRoom(){
+        SharedPreferences prefs = application.getSharedPreferences(BuildConfig.sp_name, MODE_PRIVATE);
+        return prefs.getInt(BuildConfig.sp_reserved_room, 0);
+    }
 }

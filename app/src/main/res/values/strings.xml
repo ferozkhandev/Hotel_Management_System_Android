@@ -26,4 +26,10 @@
     <string name="hotel_name">Hotel Name</string>
     <string name="add_room">Add Room</string>
     <string name="room_number">Room Number</string>
+    <string name="internet_available">Internet Available</string>
+    <string name="inernet_not_available">Internet Not Available</string>
+    <string name="available">Available</string>
+    <string name="not_available">Not Available</string>
+    <string name="checked_in">Checked In</string>
+    <string name="checked_out">Checked Out</string>
 </resources>

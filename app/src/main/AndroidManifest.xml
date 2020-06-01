@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.user_dashboard.UserDashboardActivity"></activity>
+        <activity android:name=".ui.book_room.BookRoomActivity"></activity>
+        <activity android:name=".ui.user_dashboard.UserDashboardActivity" />
         <activity android:name=".ui.hotel_manager_dashboard.HotelManagerDashboardActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

@@ -24,8 +24,8 @@ public interface RatingDAO {
     void delete(Rating rating);
 
     @Query("SELECT * FROM rating WHERE user_id=:userID AND rating_to_usertype=:ratingToUserType")
-    LiveData<List<Rating>> getRating(int userID, int ratingToUserType);
+    LiveData<List<Rating>> getUserRating(int userID, int ratingToUserType);
 
-    @Query("SELECT * FROM rating WHERE hotel_id=:hotelID AND room_id=:roomID AND rating_to_usertype=:ratingToUserType")
-    LiveData<List<Rating>> getRating(int hotelID, int roomID, int ratingToUserType);
+    @Query("SELECT AVG(rating) FROM rating WHERE room_id=:roomID AND rating_to_usertype=:ratingToUserType")
+    LiveData<Float> getRoomRating(int roomID, int ratingToUserType);
 }

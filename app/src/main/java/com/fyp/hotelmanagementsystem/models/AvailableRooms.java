@@ -15,6 +15,9 @@ public class AvailableRooms {
     @ColumnInfo(name = "longitude")
     public double longitude;
 
+    /*@ColumnInfo(name = "rating")
+    public float rating;*/
+
     @Embedded
     public Rooms rooms;
 }

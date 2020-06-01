@@ -30,6 +30,7 @@ public class HotelManagerDashboardActivity extends AppCompatActivity implements 
 
     private HotelManagerDashboardViewModel viewModel;
     private ActivityHotelManagerDashboardBinding binding;
+    private AddRoomDialogFragment dialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class HotelManagerDashboardActivity extends AppCompatActivity implements 
         binding.setLifecycleOwner(this);
         initRecyclerView();
         binding.addRoomFloatingBtn.setOnClickListener(v -> {
-            AddRoomDialogFragment dialogFragment = new AddRoomDialogFragment();
+            dialogFragment = new AddRoomDialogFragment();
             dialogFragment.show(getSupportFragmentManager(), "Add Room");
         });
     }
@@ -79,7 +80,7 @@ public class HotelManagerDashboardActivity extends AppCompatActivity implements 
 
     @Override
     public void onAddRoomSuccess() {
-
+        dialogFragment.dismiss();
     }
 
     @Override

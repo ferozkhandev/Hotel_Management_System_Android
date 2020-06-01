@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.models.AvailableRooms;
 import com.fyp.hotelmanagementsystem.models.Rooms;
+import com.fyp.hotelmanagementsystem.ui.book_room.BookRoomActivity;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
@@ -47,34 +49,29 @@ public class AvailableRoomsAdapter extends RecyclerView.Adapter<AvailableRoomsAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AvailableRooms room = rooms.get(position);
         Uri uri = Uri.parse(room.rooms.getPicture());
-        if (uri!=null && uri.getPath()!=null){
-            holder.itemView.getContext().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            holder.roomImage.setImageURI(uri);
-            try {
-                InputStream imageStream = holder.itemView.getContext().getContentResolver().openInputStream(uri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                holder.roomImage.setImageBitmap(selectedImage);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            /*Glide.with(holder.itemView.getContext())
-                    .load(new File(uri.getPath()))
-                    .into(holder.roomImage);*/
-
-            /*Picasso.get()
-                    .load(uri)
-                    .into(holder.roomImage);*/
-        }
+        holder.roomImage.setImageURI(uri);
+        String roomNumber = "Room Number: " + room.rooms.getRoomNumber();
+        String numberOfBeds = "Number of Beds: " + room.rooms.getNumberOfBeds();
+        String rent = "Rent: " + room.rooms.getRent();
+        String roomStatus = "Room Status: "+ room.rooms.getStatus();
         holder.hotelName.setText(String.valueOf(room.hotelName));
-        holder.roomNumber.setText(String.valueOf(room.rooms.getRoomNumber()));
-        holder.numberOfBedRooms.setText(String.valueOf(room.rooms.getNumberOfBeds()));
+        holder.roomNumber.setText(roomNumber);
+        holder.numberOfBedRooms.setText(numberOfBeds);
         if (room.rooms.isInternetAvailability()){
-            holder.internetAvailability.setText("Available");
+            holder.internetAvailability.setText(R.string.internet_available);
         } else {
-            holder.internetAvailability.setText("Not Available");
+            holder.internetAvailability.setText(R.string.inernet_not_available);
         }
-        holder.rent.setText(String.valueOf(room.rooms.getRent()));
-        holder.roomStatus.setText(room.rooms.getStatus());
+        holder.rent.setText(rent);
+        holder.roomStatus.setText(roomStatus);
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), BookRoomActivity.class);
+            intent.putExtra("hotel_name", room.hotelName);
+            intent.putExtra("hotel_id", room.rooms.getHotelId());
+            intent.putExtra("room_id", room.rooms.getId());
+            holder.itemView.getContext().startActivity(intent);
+        });
+//        holder.ratingBar.setRating();
     }
 
     @Override
@@ -89,6 +86,7 @@ public class AvailableRoomsAdapter extends RecyclerView.Adapter<AvailableRoomsAd
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView roomImage;
         MaterialTextView hotelName, roomNumber, numberOfBedRooms, internetAvailability, rent, roomStatus;
+        RatingBar ratingBar;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,7 +96,8 @@ public class AvailableRoomsAdapter extends RecyclerView.Adapter<AvailableRoomsAd
             numberOfBedRooms = itemView.findViewById(R.id.number_of_bedrooms);
             internetAvailability = itemView.findViewById(R.id.internet_availability);
             rent = itemView.findViewById(R.id.rent);
-            roomStatus = itemView.findViewById(R.id.room_availability);
+            roomStatus = itemView.findViewById(R.id.status);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
         }
     }
 }

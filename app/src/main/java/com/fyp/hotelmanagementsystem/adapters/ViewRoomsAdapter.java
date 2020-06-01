@@ -43,26 +43,21 @@ public class ViewRoomsAdapter extends RecyclerView.Adapter<ViewRoomsAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Rooms room = rooms.get(position);
         Uri uri = Uri.parse(room.getPicture());
-//        holder.roomImage.setImageURI(uri);
-        if (uri!=null && uri.getPath()!=null){
-            /*Glide.with(holder.itemView.getContext())
-                    .load(new File(uri.getPath()))
-                    .into(holder.roomImage);*/
-
-            Picasso.get()
-                    .load(uri)
-                    .into(holder.roomImage);
-        }
+        holder.roomImage.setImageURI(uri);
         holder.hotelName.setText(String.valueOf(hotelWithRooms.hotel.getHotelName()));
-        holder.roomNumber.setText(String.valueOf(room.getRoomNumber()));
-        holder.numberOfBedRooms.setText(String.valueOf(room.getNumberOfBeds()));
+        String roomNumber = "Room Number: " + room.getRoomNumber();
+        holder.roomNumber.setText(roomNumber);
+        String numberOfBeds = "Number of Beds: " + room.getNumberOfBeds();
+        holder.numberOfBedRooms.setText(numberOfBeds);
         if (room.isInternetAvailability()){
-            holder.internetAvailability.setText("Available");
+            holder.internetAvailability.setText(R.string.internet_available);
         } else {
-            holder.internetAvailability.setText("Not Available");
+            holder.internetAvailability.setText(R.string.inernet_not_available);
         }
-        holder.rent.setText(String.valueOf(room.getRent()));
-        holder.roomStatus.setText(room.getStatus());
+        String rent = "Rent: " + room.getRent();
+        holder.rent.setText(rent);
+        String roomStatus = "Room Status: "+ room.getStatus();
+        holder.roomStatus.setText(roomStatus);
     }
 
     @Override
@@ -86,7 +81,7 @@ public class ViewRoomsAdapter extends RecyclerView.Adapter<ViewRoomsAdapter.View
             numberOfBedRooms = itemView.findViewById(R.id.number_of_bedrooms);
             internetAvailability = itemView.findViewById(R.id.internet_availability);
             rent = itemView.findViewById(R.id.rent);
-            roomStatus = itemView.findViewById(R.id.room_availability);
+            roomStatus = itemView.findViewById(R.id.status);
         }
     }
 }

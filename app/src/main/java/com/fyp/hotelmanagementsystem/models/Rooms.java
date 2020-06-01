@@ -5,6 +5,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 @Entity(tableName = "room")
 public class Rooms {
 
@@ -36,10 +39,14 @@ public class Rooms {
     @ColumnInfo(name = "hotel_id")
     private int hotelId;
 
+    @ColumnInfo(name = "reserved_by")
+    @Nonnull private int reservedBy;
+
     @Ignore
     public Rooms() {
     }
 
+    @Ignore
     public Rooms(int roomNumber, int numberOfBeds, boolean internetAvailability, int rent, String picture, String status, boolean isAvailable, int hotelId) {
         this.roomNumber = roomNumber;
         this.numberOfBeds = numberOfBeds;
@@ -49,6 +56,18 @@ public class Rooms {
         this.status = status;
         this.isAvailable = isAvailable;
         this.hotelId = hotelId;
+    }
+
+    public Rooms(int roomNumber, int numberOfBeds, boolean internetAvailability, int rent, String picture, String status, boolean isAvailable, int hotelId, int reservedBy) {
+        this.roomNumber = roomNumber;
+        this.numberOfBeds = numberOfBeds;
+        this.internetAvailability = internetAvailability;
+        this.rent = rent;
+        this.picture = picture;
+        this.status = status;
+        this.isAvailable = isAvailable;
+        this.hotelId = hotelId;
+        this.reservedBy = reservedBy;
     }
 
     public int getId() {
@@ -121,5 +140,13 @@ public class Rooms {
 
     public void setHotelId(int hotelId) {
         this.hotelId = hotelId;
+    }
+
+    public int getReservedBy() {
+        return reservedBy;
+    }
+
+    public void setReservedBy(int reservedBy) {
+        this.reservedBy = reservedBy;
     }
 }

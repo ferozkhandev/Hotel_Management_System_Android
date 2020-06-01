@@ -64,6 +64,7 @@ public class AddRoomDialogFragment extends AppCompatDialogFragment {
         binding.addRoomBtn.setOnClickListener(v -> {
             if (selectedImageUri!=null){
                 addRoom();
+                listener.onAddRoomSuccess();
             } else {
                 DisplayMessage.longShowMessage(getActivity(), "Please add an image first.");
             }
@@ -78,6 +79,7 @@ public class AddRoomDialogFragment extends AppCompatDialogFragment {
     }
 
     private void addRoom(){
+        Rooms rooms = new Rooms();
         String roomNumber = binding.roomNumber.getText().toString().trim();
         String numberOfBeds = binding.numberOfBeds.getText().toString().trim();
         int internetSpinner = binding.internetAvailability.getSelection();
@@ -89,15 +91,18 @@ public class AddRoomDialogFragment extends AppCompatDialogFragment {
         int selectedStatus = binding.status.getSelection();
         if (selectedStatus == 0){
             status = "Available";
+            rooms.setAvailable(true);
         } else if (selectedStatus == 1){
             status = "Not Available";
+            rooms.setAvailable(false);
         } else if (selectedStatus == 2){
             status = "Check In";
+            rooms.setAvailable(false);
         } else if (selectedStatus == 3){
             status = "Check Out";
+            rooms.setAvailable(false);
         }
         String rent = binding.rent.getText().toString().trim();
-        Rooms rooms = new Rooms();
         rooms.setRoomNumber(Integer.parseInt(roomNumber));
         rooms.setNumberOfBeds(Integer.parseInt(numberOfBeds));
         rooms.setInternetAvailability(internetAvailability);

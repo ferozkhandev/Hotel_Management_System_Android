@@ -23,6 +23,7 @@ android {
 
         buildConfigField("String", "sp_name", secretsProperties['sp_name'])
         buildConfigField("String", "sp_user", secretsProperties['sp_user'])
+        buildConfigField("String", "sp_reserved_room", secretsProperties['sp_reserved_room'])
         resValue("string", "HMS_MAPS_API_KEY", secretsProperties['maps_API_KEY'])
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
