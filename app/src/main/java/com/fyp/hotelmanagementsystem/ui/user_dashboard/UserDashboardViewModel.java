@@ -33,6 +33,10 @@ public class UserDashboardViewModel extends ViewModel {
         return database.hotelDAO().getAllHotelWithRooms();
     }
 
+    LiveData<AvailableRooms> getReservedRoom(int roomId){
+        return database.hotelDAO().getReservedRoom(roomId);
+    }
+
     LiveData<Location> getLocation(){
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(location -> {

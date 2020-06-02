@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,10 +15,12 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.fyp.hotelmanagementsystem.BuildConfig;
 import com.fyp.hotelmanagementsystem.R;
@@ -26,6 +29,7 @@ import com.fyp.hotelmanagementsystem.adapters.ViewRoomsAdapter;
 import com.fyp.hotelmanagementsystem.database.AppDatabase;
 import com.fyp.hotelmanagementsystem.databinding.ActivityUserDashboardBinding;
 import com.fyp.hotelmanagementsystem.models.AvailableRooms;
+import com.fyp.hotelmanagementsystem.ui.book_room.BookRoomActivity;
 import com.fyp.hotelmanagementsystem.ui.hotel_manager_dashboard.HotelManagerDashboardActivity;
 import com.fyp.hotelmanagementsystem.ui.login.LoginActivity;
 import com.fyp.hotelmanagementsystem.utils.DisplayMessage;
@@ -64,9 +68,50 @@ public class UserDashboardActivity extends AppCompatActivity implements Lifecycl
         viewModel = new ViewModelProvider(this, factory).get(UserDashboardViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(this);
+        loadData();
+    }
 
-        if (PermissionsCheck.checkLocationPermission(this, this)){
-            verifyLocationSettings();
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadData();
+    }
+
+    private void loadData(){
+        if (SharedPreferencesUtility.getReservedRoom() != 0){
+            binding.reservedRoomCard.setVisibility(View.VISIBLE);
+            binding.recyclerView.setVisibility(View.GONE);
+            viewModel.getReservedRoom(SharedPreferencesUtility.getReservedRoom()).observe(this, availableRooms -> {
+                Uri uri = Uri.parse(availableRooms.rooms.getPicture());
+                binding.roomImage.setImageURI(uri);
+                String roomNumber = "Room Number: " + availableRooms.rooms.getRoomNumber();
+                String numberOfBeds = "Number of Beds: " + availableRooms.rooms.getNumberOfBeds();
+                String rent = "Rent: " + availableRooms.rooms.getRent();
+                String roomStatus = "Room Status: "+ availableRooms.rooms.getStatus();
+                binding.hotelName.setText(String.valueOf(availableRooms.hotelName));
+                binding.roomNumber.setText(roomNumber);
+                binding.numberOfBedrooms.setText(numberOfBeds);
+                if (availableRooms.rooms.isInternetAvailability()){
+                    binding.internetAvailability.setText(R.string.internet_available);
+                } else {
+                    binding.internetAvailability.setText(R.string.inernet_not_available);
+                }
+                binding.rent.setText(rent);
+                binding.status.setText(roomStatus);
+                binding.reservedRoomCard.setOnClickListener(v -> {
+                    Intent intent = new Intent(UserDashboardActivity.this, BookRoomActivity.class);
+                    intent.putExtra("hotel_name", availableRooms.hotelName);
+                    intent.putExtra("hotel_id", availableRooms.rooms.getHotelId());
+                    intent.putExtra("room_id", availableRooms.rooms.getId());
+                    startActivity(intent);
+                });
+            });
+        } else {
+            binding.reservedRoomCard.setVisibility(View.GONE);
+            binding.recyclerView.setVisibility(View.VISIBLE);
+            if (PermissionsCheck.checkLocationPermission(this, this)){
+                verifyLocationSettings();
+            }
         }
     }
 

@@ -37,6 +37,9 @@ public interface HotelDAO {
     @Query("SELECT hotel.hotel_name, hotel.latitude, hotel.longitude, room.* FROM room LEFT JOIN hotel ON room.hotel_id = hotel.id")
     LiveData<List<AvailableRooms>> getAllHotelWithRooms();
 
+    @Query("SELECT hotel.hotel_name, hotel.latitude, hotel.longitude, room.* FROM room LEFT JOIN hotel ON room.hotel_id = hotel.id WHERE room.id=:roomId")
+    LiveData<AvailableRooms> getReservedRoom(int roomId);
+
     @Query("SELECT id FROM hotel WHERE user_id=:userID")
     LiveData<Integer> getHotelId(int userID);
 }

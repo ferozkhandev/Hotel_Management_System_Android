@@ -21,16 +21,17 @@ public class Rating {
     private int room_id;
 
     @ColumnInfo(name = "rating")
-    private int rating;
+    private float rating;
 
     @ColumnInfo(name = "rating_to_usertype")
     private int ratingToUserType;
 
-    public Rating(int user_id, int hotel_id, int room_id, int rating) {
+    public Rating(int user_id, int hotel_id, int room_id, float rating, int ratingToUserType) {
         this.user_id = user_id;
         this.hotel_id = hotel_id;
         this.room_id = room_id;
         this.rating = rating;
+        this.ratingToUserType = ratingToUserType;
     }
 
     public int getId() {
@@ -65,11 +66,11 @@ public class Rating {
         this.room_id = room_id;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

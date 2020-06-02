@@ -37,4 +37,16 @@ public class BookRoomViewModel extends ViewModel {
         executor.execute(() -> database.roomsDAO().update(rooms));
         SharedPreferencesUtility.setReservedRoom(rooms.getId());
     }
+
+    public void checkIn(Rooms rooms) {
+        rooms.setStatus("Checked In");
+        executor.execute(()-> database.roomsDAO().update(rooms));
+    }
+
+    public void checkOut(Rooms rooms) {
+        rooms.setReservedBy(0);
+        rooms.setStatus("Checked Out");
+        executor.execute(()-> database.roomsDAO().update(rooms));
+        SharedPreferencesUtility.setReservedRoom(0);
+    }
 }

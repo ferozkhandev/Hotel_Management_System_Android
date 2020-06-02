@@ -1,4 +1,4 @@
-package com.fyp.hotelmanagementsystem.ui.view_rooms;
+package com.fyp.hotelmanagementsystem.ui.give_rating_to_user;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -8,12 +8,12 @@ import com.fyp.hotelmanagementsystem.database.AppDatabase;
 
 import java.util.concurrent.Executor;
 
-public class ViewRoomsViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+public class GiveRatingToUserViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private AppDatabase database;
     private Executor executor;
 
-    public ViewRoomsViewModelFactory(AppDatabase database, Executor executor) {
+    public GiveRatingToUserViewModelFactory(AppDatabase database, Executor executor) {
         this.database = database;
         this.executor = executor;
     }
@@ -21,6 +21,6 @@ public class ViewRoomsViewModelFactory extends ViewModelProvider.NewInstanceFact
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new ViewRoomsViewModel(database, executor);
+        return (T) new GiveRatingToUserViewModel(database, executor);
     }
 }

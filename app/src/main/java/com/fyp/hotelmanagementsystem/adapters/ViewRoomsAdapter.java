@@ -1,5 +1,6 @@
 package com.fyp.hotelmanagementsystem.adapters;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.fyp.hotelmanagementsystem.R;
 import com.fyp.hotelmanagementsystem.models.HotelWithRooms;
 import com.fyp.hotelmanagementsystem.models.Rooms;
+import com.fyp.hotelmanagementsystem.ui.book_room.BookRoomActivity;
+import com.fyp.hotelmanagementsystem.ui.view_rooms.ViewRoomsActivity;
 import com.fyp.hotelmanagementsystem.utils.SharedPreferencesUtility;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
@@ -44,7 +47,7 @@ public class ViewRoomsAdapter extends RecyclerView.Adapter<ViewRoomsAdapter.View
         Rooms room = rooms.get(position);
         Uri uri = Uri.parse(room.getPicture());
         holder.roomImage.setImageURI(uri);
-        holder.hotelName.setText(String.valueOf(hotelWithRooms.hotel.getHotelName()));
+        holder.hotelName.setText(hotelWithRooms.hotel.getHotelName());
         String roomNumber = "Room Number: " + room.getRoomNumber();
         holder.roomNumber.setText(roomNumber);
         String numberOfBeds = "Number of Beds: " + room.getNumberOfBeds();
@@ -58,6 +61,13 @@ public class ViewRoomsAdapter extends RecyclerView.Adapter<ViewRoomsAdapter.View
         holder.rent.setText(rent);
         String roomStatus = "Room Status: "+ room.getStatus();
         holder.roomStatus.setText(roomStatus);
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), ViewRoomsActivity.class);
+            intent.putExtra("hotel_name", hotelWithRooms.hotel.getHotelName());
+            intent.putExtra("hotel_id", room.getHotelId());
+            intent.putExtra("room_id", room.getId());
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
     @Override
